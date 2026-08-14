@@ -6,7 +6,7 @@ on:
 jobs:
   build-ios-simulator:
     name: Build iOS Simulator Debug (Unsigned)
-    runs-on: macos-15
+    runs-on: macos-26
 
     steps:
       - name: Checkout repository
@@ -18,11 +18,17 @@ jobs:
           node-version: 22
           cache: 'npm'
 
+      - name: Select Xcode 26.6
+        run: sudo xcode-select -s /Applications/Xcode_26.6.app/Contents/Developer || true
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build web assets
         run: npm run build
+        env:
+          VITE_BASE44_APP_ID: "6a654dcc789406839dc9b542"
+          VITE_BASE44_APP_BASE_URL: "https://6a654dcc789406839dc9b542.base44.app"
 
       - name: Sync Capacitor iOS (Protected)
         run: npm run ios:sync
@@ -42,7 +48,7 @@ jobs:
 
   build-ios-release:
     name: Build iOS Real Device Release (Unsigned)
-    runs-on: macos-15
+    runs-on: macos-26
 
     steps:
       - name: Checkout repository
@@ -54,11 +60,17 @@ jobs:
           node-version: 22
           cache: 'npm'
 
+      - name: Select Xcode 26.6
+        run: sudo xcode-select -s /Applications/Xcode_26.6.app/Contents/Developer || true
+
       - name: Install dependencies
         run: npm ci
 
       - name: Build web assets
         run: npm run build
+        env:
+          VITE_BASE44_APP_ID: "6a654dcc789406839dc9b542"
+          VITE_BASE44_APP_BASE_URL: "https://6a654dcc789406839dc9b542.base44.app"
 
       - name: Sync Capacitor iOS (Protected)
         run: npm run ios:sync
