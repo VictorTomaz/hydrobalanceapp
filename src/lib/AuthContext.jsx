@@ -110,6 +110,10 @@ export const AuthProvider = ({ children }) => {
           type: 'auth_required',
           message: 'Authentication required'
         });
+        
+        // Remove expired/invalid tokens so the user is not stuck in a bad session state
+        localStorage.removeItem('base44_access_token');
+        localStorage.removeItem('token');
       }
     }
   };
