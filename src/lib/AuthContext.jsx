@@ -118,6 +118,10 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setIsAuthenticated(false);
     
+    // Ensure the app-params token is also cleared so it doesn't persist across reloads
+    localStorage.removeItem('base44_access_token');
+    localStorage.removeItem('token');
+    
     if (shouldRedirect) {
       // Use the SDK's logout method which handles token cleanup and redirect
       base44.auth.logout(window.location.href);
