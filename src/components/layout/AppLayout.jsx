@@ -5,6 +5,7 @@ import { base44 } from "@/api/base44Client";
 import BottomNav from "@/components/layout/BottomNav";
 import { useScheduledNotifications } from "@/hooks/useScheduledNotifications";
 import { todayString } from "@/lib/hydration";
+import { hasAppAccess } from "@/lib/subscription";
 
 export default function AppLayout() {
   const [profile, setProfile] = useState(null);
@@ -20,10 +21,22 @@ export default function AppLayout() {
     (async () => {
       const user = await base44.auth.me();
       const profiles = await base44.entities.UserProfile.filter({ created_by_id: user.id });
+      const fetched = profiles[0] || null;
       if (mounted) {
-        setProfile(profiles[0] || null);
+        setProfile(fetched);
         setUserName(user.full_name || "");
         setLoading(false);
+      }
+      // Lazy migration: grant a 7-day trial start to existing onboarded profiles that predate subscriptions.
+      if (fetched && fetched.onboarding_completed && !fetched.trial_start_date) {
+        try {
+          const updated = await base44.entities.UserProfile.update(fetched.id, {
+            trial_start_date: new Date().toISOString(),
+          });
+          if (mounted) setProfile(updated);
+        } catch (_) {
+          /* non-fatal */
+        }
       }
     })();
     return () => {
@@ -32,12 +45,30 @@ export default function AppLayout() {
   }, []);
 
   // Lightweight onboarding redirect: runs only after the profile resolves,
-  // never on every navigation, so transitions stay smooth.
+  // never on every navigation, so transitions stay smooth. A brand-new user
+  // has no profile record at all — send them to onboarding to create one
+  // (otherwise Home hangs on its "no profile" loading spinner forever).
   useEffect(() => {
-    if (profile && !profile.onboarding_completed && location.pathname !== "/onboarding") {
+    if (loading) return;
+    if (location.pathname === "/onboarding") return;
+    const needsOnboarding = !profile || !profile.onboarding_completed;
+    if (needsOnboarding) {
       navigate("/onboarding", { replace: true });
     }
-  }, [profile, location.pathname, navigate]);
+  }, [profile, loading, location.pathname, navigate]);
+
+  // Subscription gating: after onboarding, the whole app requires either an active subscription
+  // or an active 7-day trial. Allow /subscribe and /settings so the user can subscribe or reach
+  // account actions even while paywalled.
+  useEffect(() => {
+    if (loading) return;
+    const allowedWithoutSub = ["/onboarding", "/subscribe", "/settings"];
+    if (allowedWithoutSub.includes(location.pathname)) return;
+    if (!profile || !profile.onboarding_completed) return;
+    if (!hasAppAccess(profile)) {
+      navigate("/subscribe", { replace: true });
+    }
+  }, [profile, loading, location.pathname, navigate]);
 
   useScheduledNotifications(profile, todayString());
 

@@ -81,6 +81,41 @@
     "onboarding_completed": {
       "type": "boolean",
       "default": false
+    },
+    "subscription_status": {
+      "type": "string",
+      "enum": [
+        "none",
+        "active",
+        "canceled"
+      ],
+      "default": "none",
+      "description": "Set to 'active' by the payments webhook when a subscription is paid, 'canceled' when it ends."
+    },
+    "trial_start_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO timestamp the 7-day app-level free trial started, set on onboarding completion."
+    },
+    "subscription_product_id": {
+      "type": "string",
+      "description": "Apple product identifier that was purchased."
+    },
+    "subscription_expires_at": {
+      "type": "string",
+      "description": "ISO date of the current subscription period's end."
+    },
+    "subscription_environment": {
+      "type": "string",
+      "description": "'production' or 'sandbox' \u2014 which Apple environment the subscription was verified in."
+    },
+    "subscription_original_transaction_id": {
+      "type": "string",
+      "description": "Apple's stable id for the subscription, used to match server notifications to the user."
+    },
+    "subscription_last_notification": {
+      "type": "string",
+      "description": "Last App Store server notification type received, for debugging."
     }
   },
   "required": [

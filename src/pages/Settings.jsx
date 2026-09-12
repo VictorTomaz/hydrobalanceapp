@@ -9,6 +9,8 @@ import { requestNotificationPermission } from "@/hooks/useScheduledNotifications
 import DrawerSelect from "@/components/settings/DrawerSelect";
 import ReminderTimesEditor from "@/components/settings/ReminderTimesEditor";
 import { getStoredTheme, setTheme } from "@/lib/theme";
+import { isSubscriptionActive, trialDaysRemaining } from "@/lib/subscription";
+import { Crown } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -57,9 +59,34 @@ export default function Settings() {
     base44.auth.logout();
   };
 
+  const subscribed = isSubscriptionActive(profile);
+  const daysLeft = trialDaysRemaining(profile);
+
   return (
     <div className="max-w-md mx-auto px-5 pt-8 pb-6 space-y-5">
       <h1 className="font-heading text-2xl font-extrabold text-[#3A4759] dark:text-slate-100">Settings</h1>
+
+      <Link
+        to="/subscribe"
+        className="flex items-center justify-between rounded-3xl p-5 border-2 border-[#2BC4BB] bg-[#EAF9F8] dark:bg-slate-800 dark:border-[#2BC4BB]"
+      >
+        <div className="flex items-center gap-3">
+          <Crown className="w-5 h-5 text-[#2BC4BB]" />
+          <div>
+            <div className="font-heading font-bold text-[#3A4759] dark:text-slate-100">
+              {subscribed ? "Water Rest Pro" : "Manage Subscription"}
+            </div>
+            <div className="text-sm text-[#5C6B7D] dark:text-slate-400">
+              {subscribed
+                ? "Active subscription"
+                : daysLeft > 0
+                ? `Free trial — ${daysLeft} day${daysLeft === 1 ? "" : "s"} left`
+                : "Subscribe to continue"}
+            </div>
+          </div>
+        </div>
+        <span className="text-[#2BC4BB] font-bold text-sm">{subscribed ? "View" : "Upgrade"}</span>
+      </Link>
 
       <div className="bg-white dark:bg-slate-800 rounded-3xl p-5 border-2 border-[#EAF2FB] dark:border-slate-700 space-y-4">
         <div>

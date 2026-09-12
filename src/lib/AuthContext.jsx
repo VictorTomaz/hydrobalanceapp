@@ -110,10 +110,6 @@ export const AuthProvider = ({ children }) => {
           type: 'auth_required',
           message: 'Authentication required'
         });
-        
-        // Remove expired/invalid tokens so the user is not stuck in a bad session state
-        localStorage.removeItem('base44_access_token');
-        localStorage.removeItem('token');
       }
     }
   };
@@ -121,11 +117,9 @@ export const AuthProvider = ({ children }) => {
   const logout = (shouldRedirect = true) => {
     setUser(null);
     setIsAuthenticated(false);
-    
-    // Ensure the app-params token is also cleared so it doesn't persist across reloads
-    localStorage.removeItem('base44_access_token');
-    localStorage.removeItem('token');
-    
+
+    // No nativo, base44.auth.logout foi sobrescrito em base44Client.js para limpar
+    // o storage e navegar localmente, em vez de sair pra WebView do site do Base44.
     if (shouldRedirect) {
       // Use the SDK's logout method which handles token cleanup and redirect
       base44.auth.logout(window.location.href);

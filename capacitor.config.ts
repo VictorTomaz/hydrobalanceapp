@@ -1,7 +1,7 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.hydrobalance.app',
+  appId: 'com.base6a654dcc789406839dc9b542.app',
   appName: 'HydroBalance',
   webDir: 'dist',
   plugins: {

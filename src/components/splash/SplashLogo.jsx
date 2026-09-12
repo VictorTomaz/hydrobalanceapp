@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-// Animated recreation of the HydroBalance logo — droplet, crescent moon,
+// Animated recreation of the WaterRest logo — droplet, crescent moon,
 // falling drip, and breathing lotus — built as SVG so each layer animates.
 export default function SplashLogo({ size = 200 }) {
   return (

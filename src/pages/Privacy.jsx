@@ -43,14 +43,14 @@ export default function Privacy() {
       <div className="max-w-md mx-auto px-5 py-6 space-y-7">
         <div>
           <h1 className="font-heading text-2xl font-extrabold text-[#3A4759] dark:text-slate-100">
-            HydroBalance Privacy Policy
+            WaterRest Privacy Policy
           </h1>
           <p className="text-xs text-[#8A97A8] dark:text-slate-400 mt-1">Last updated: August 2026</p>
         </div>
 
         <Section title="1. Overview">
           <P>
-            HydroBalance (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;the App&rdquo;) is a hydration and evening
+            WaterRest (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;the App&rdquo;) is a hydration and evening
             wind-down companion that helps you set a personalized daily water goal, log what you drink,
             and follow calming wind-down routines. This Privacy Policy explains, in plain language, every
             way this App collects and uses your data, the specific data we receive when you sign in with a
@@ -58,7 +58,7 @@ export default function Privacy() {
           </P>
           <P>
             By creating an account or using the App, you agree to the collection and use of information as
-            described here. This policy applies to the HydroBalance app and to data gathered when you sign in
+            described here. This policy applies to the WaterRest app and to data gathered when you sign in
             using your chosen sign-in provider.
           </P>
         </Section>
@@ -104,7 +104,7 @@ export default function Privacy() {
 
         <Section title="4. Information From Your Sign-In Provider (Detailed)">
           <P>
-            When you choose to sign in through a third-party provider, HydroBalance uses that provider&rsquo;s
+            When you choose to sign in through a third-party provider, WaterRest uses that provider&rsquo;s
             sign-in service (an API service). The provider shares with us only the basic profile information
             you approve during sign-in:
           </P>
@@ -131,14 +131,14 @@ export default function Privacy() {
           <P><strong>4.2 How we use this data</strong></P>
           <P>We use the name, email, and profile photo received from your provider solely to:</P>
           <UL>
-            <li>Authenticate you and create or sign in to your HydroBalance account;</li>
+            <li>Authenticate you and create or sign in to your WaterRest account;</li>
             <li>Display your name and profile image within the App;</li>
             <li>Email you account- or security-related messages at the address on file, where supported;</li>
             <li>Identify you across sessions as long as your account is active.</li>
           </UL>
 
           <P><strong>4.3 Data we do NOT collect from your provider</strong></P>
-          <P>HydroBalance does not:</P>
+          <P>WaterRest does not:</P>
           <UL>
             <li>Read or store your email messages, files, documents, calendars, contacts, or photos held by the provider;</li>
             <li>Access your provider account settings, purchase history, or any other provider service beyond the basic profile above;</li>
@@ -149,7 +149,7 @@ export default function Privacy() {
           <P>Your sign-in information is shared only as follows:</P>
           <UL>
             <li>With our hosting and authentication provider (the Base44 platform) strictly as a processor, to store your account and operate the Service on our behalf;</li>
-            <li>As required by law, or to protect the rights, property, or safety of HydroBalance, our users, or the public.</li>
+            <li>As required by law, or to protect the rights, property, or safety of WaterRest, our users, or the public.</li>
           </UL>
           <P>We do <strong>not</strong> sell, rent, or trade your sign-in information, and we do <strong>not</strong> share it with advertisers or use it to serve ads.</P>
 
@@ -172,17 +172,17 @@ export default function Privacy() {
           </P>
 
           <P><strong>4.7 Revoking access</strong></P>
-          <P>You can disconnect HydroBalance from your provider at any time:</P>
+          <P>You can disconnect WaterRest from your provider at any time:</P>
           <UL>
-            <li>Open your provider&rsquo;s account security or connected-apps settings, select HydroBalance, and remove access;</li>
-            <li>Or delete your HydroBalance account from the App&rsquo;s Settings screen.</li>
+            <li>Open your provider&rsquo;s account security or connected-apps settings, select WaterRest, and remove access;</li>
+            <li>Or delete your WaterRest account from the App&rsquo;s Settings screen.</li>
           </UL>
           <P>Revoking access stops new data sharing but does not automatically delete data already stored in your account &mdash; use Settings &rarr; Delete Account to remove it.</P>
         </Section>
 
         <Section title="5. Cookies, Storage &amp; Notifications">
           <P>
-            HydroBalance does not use advertising cookies or third-party tracking cookies. We use your
+            WaterRest does not use advertising cookies or third-party tracking cookies. We use your
             browser&rsquo;s local storage to keep your session token and remember your settings so the App
             loads without re-sign-in. If your browser supports notifications and you grant permission, we use
             that solely to show in-app water and wind-down reminders at the times you set. You can revoke
@@ -234,7 +234,7 @@ export default function Privacy() {
             <li><strong>Access &amp; update</strong> &ndash; view and edit your profile, schedule, and preferences anytime in Settings.</li>
             <li><strong>Delete</strong> &ndash; remove individual logs or your whole account via Settings &rarr; Delete Account.</li>
             <li><strong>Notifications</strong> &ndash; grant or revoke in-app notification permission in your device/browser settings.</li>
-            <li><strong>Revoke sign-in</strong> &ndash; disconnect HydroBalance from your sign-in provider at any time via that provider&rsquo;s account security or connected-apps settings.</li>
+            <li><strong>Revoke sign-in</strong> &ndash; disconnect WaterRest from your sign-in provider at any time via that provider&rsquo;s account security or connected-apps settings.</li>
             <li><strong>Contact</strong> &ndash; email us (Section 14) to request access to, correction of, or deletion of your data.</li>
           </UL>
           <P>
@@ -247,7 +247,7 @@ export default function Privacy() {
 
         <Section title="11. Children&rsquo;s Privacy">
           <P>
-            HydroBalance is not directed to children under 13 (or the equivalent minimum age in your
+            WaterRest is not directed to children under 13 (or the equivalent minimum age in your
             country). We do not knowingly collect personal information from children. If you believe a child
             has provided us personal data, contact us and we will take steps to delete it.
           </P>

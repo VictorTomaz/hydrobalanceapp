@@ -75,8 +75,8 @@ jobs:
             exit 1
           fi
           
-          if [[ "$APP_ID" != *".com.hydrobalance.app" ]]; then
-            echo "application-identifier does not end with .com.hydrobalance.app"
+          if [[ "$APP_ID" != *".com.base6a654dcc789406839dc9b542.app" ]]; then
+            echo "application-identifier does not end with .com.base6a654dcc789406839dc9b542.app"
             exit 1
           fi
           
@@ -109,7 +109,7 @@ jobs:
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Apple Distribution" \
             PROVISIONING_PROFILE_SPECIFIER="${PROVISIONING_PROFILE_NAME}" \
-            PRODUCT_BUNDLE_IDENTIFIER=com.hydrobalance.app
+            PRODUCT_BUNDLE_IDENTIFIER=com.base6a654dcc789406839dc9b542.app
 
       - name: Create ExportOptions.plist
         run: |
@@ -126,7 +126,7 @@ jobs:
               <string>BKXSXM4KM4</string>
               <key>provisioningProfiles</key>
               <dict>
-                  <key>com.hydrobalance.app</key>
+                  <key>com.base6a654dcc789406839dc9b542.app</key>
                   <string>${PROVISIONING_PROFILE_NAME}</string>
               </dict>
           </dict>

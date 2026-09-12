@@ -24,7 +24,7 @@ export default function SplashScreen() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
       >
-        HydroBalance
+        WaterRest
       </motion.h1>
     </motion.div>
   );

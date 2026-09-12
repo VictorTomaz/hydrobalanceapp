@@ -24,6 +24,12 @@ import WindDown from '@/pages/WindDown';
 import WindDownActivities from '@/pages/WindDownActivities';
 import Settings from '@/pages/Settings';
 import Privacy from '@/pages/Privacy';
+import Support from '@/pages/Support';
+import Subscribe from '@/pages/Subscribe';
+import ThankYou from '@/pages/ThankYou';
+import { Capacitor } from '@capacitor/core';
+import { App as CapacitorApp } from '@capacitor/app';
+import { Browser } from '@capacitor/browser';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -56,6 +62,8 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/privacy" element={<Privacy />} />
+      <Route path="/support" element={<Support />} />
+      <Route path="/ThankYou" element={<ThankYou />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route element={<AppLayout />}>
           <Route path="/onboarding" element={<Onboarding />} />
@@ -64,6 +72,7 @@ const AuthenticatedApp = () => {
           <Route path="/winddown" element={<WindDown />} />
           <Route path="/winddown/customize" element={<WindDownActivities />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/subscribe" element={<Subscribe />} />
         </Route>
       </Route>
       <Route path="*" element={<PageNotFound />} />
@@ -79,6 +88,68 @@ function App() {
     initTheme();
     const splashTimer = setTimeout(() => setShowSplash(false), 3000);
     return () => clearTimeout(splashTimer);
+  }, []);
+
+  // Trava de zoom no WKWebView. O iOS dá zoom automático ao focar um <input> com
+  // fonte < 16px e não volta sozinho — no nativo o app "abre com zoom". O
+  // index.html já tem maximum-scale=1, mas o zip do Base44 sobrescreve o
+  // index.html a cada sync, então reforçamos a meta viewport em runtime e
+  // bloqueamos os gestos de pinça/duplo-toque.
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return;
+
+    const vp = document.querySelector('meta[name="viewport"]');
+    if (vp) {
+      vp.setAttribute(
+        'content',
+        'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover',
+      );
+    }
+
+    const stopGestureZoom = (e) => e.preventDefault();
+    document.addEventListener('gesturestart', stopGestureZoom);
+    document.addEventListener('gesturechange', stopGestureZoom);
+
+    let lastTouch = 0;
+    const stopDoubleTapZoom = (e) => {
+      const now = Date.now();
+      if (now - lastTouch <= 300) e.preventDefault();
+      lastTouch = now;
+    };
+    document.addEventListener('touchend', stopDoubleTapZoom, { passive: false });
+
+    return () => {
+      document.removeEventListener('gesturestart', stopGestureZoom);
+      document.removeEventListener('gesturechange', stopGestureZoom);
+      document.removeEventListener('touchend', stopDoubleTapZoom);
+    };
+  }, []);
+
+  // Captura o retorno do login social (Google/Apple): o browser externo devolve
+  // o controle ao app via com.base6a654dcc789406839dc9b542.app://auth-callback?access_token=...
+  useEffect(() => {
+    if (!Capacitor.isNativePlatform()) return;
+
+    const listener = CapacitorApp.addListener('appUrlOpen', async (data) => {
+      if (data?.url && data.url.includes('access_token=')) {
+        try {
+          const urlObj = new URL(data.url);
+          const token = urlObj.searchParams.get('access_token');
+          if (token) {
+            localStorage.setItem('base44_access_token', token);
+            localStorage.setItem('token', token);
+            await Browser.close();
+            window.location.href = '/';
+          }
+        } catch (err) {
+          console.error('[Capacitor DeepLink Error]', err);
+        }
+      }
+    });
+
+    return () => {
+      listener.then((h) => h.remove());
+    };
   }, []);
 
   return (

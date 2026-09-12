@@ -30,10 +30,3 @@ dist-ssr
 .env
 .vite
 base44/.app.jsonc
-
-android/app/build/
-android/.gradle/
-ios/App/build/
-ios/App/Pods/
-ios/App/DerivedData/
-ios/App/xcuserdata/

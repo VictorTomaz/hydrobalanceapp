@@ -33,6 +33,8 @@ export default function Onboarding() {
       daily_goal_ml: goal,
       reminder_times: ["09:00", "12:00", "15:00", "18:00"],
       onboarding_completed: true,
+      subscription_status: "none",
+      trial_start_date: new Date().toISOString(),
     });
     setProfile(created);
     navigate("/", { replace: true });
@@ -41,7 +43,7 @@ export default function Onboarding() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6 py-10 bg-gradient-to-b from-[#EAF7FA] to-[#F7FBFD] dark:from-slate-900 dark:to-slate-900">
       <Mascot percent={10} size={100} />
-      <h1 className="font-heading text-3xl font-extrabold text-[#3A4759] dark:text-slate-100 mt-4 mb-1 text-center">Welcome to HydroBalance</h1>
+      <h1 className="font-heading text-3xl font-extrabold text-[#3A4759] dark:text-slate-100 mt-4 mb-1 text-center">Welcome to WaterRest</h1>
       <p className="text-[#8A97A8] dark:text-slate-400 text-center mb-8 max-w-xs">Let's set up your personal hydration goal and evening wind-down.</p>
 
       <div className="w-full max-w-sm space-y-5 bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-[0_8px_0_0_#E3EEF7] dark:shadow-none border-2 border-[#EAF2FB] dark:border-slate-700">
