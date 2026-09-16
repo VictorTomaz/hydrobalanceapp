@@ -1,9 +1,25 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useNavigate, useOutletContext, Link } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Droplets, Check, Sparkles, Loader2 } from "lucide-react";
 import Mascot from "@/components/mascot/Mascot";
+import { Capacitor } from "@capacitor/core";
+import { Browser } from "@capacitor/browser";
+
+// EULA padrão da Apple — não temos termos customizados, então linkamos o padrão
+// (é o que a própria Apple pede em Guideline 3.1.2(c) quando o app não tem EULA
+// próprio: "include a link in the App Description" + link funcional dentro do app).
+const APPLE_STANDARD_EULA_URL =
+  "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/";
+
+async function openExternal(url) {
+  if (Capacitor.isNativePlatform()) {
+    await Browser.open({ url });
+  } else {
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+}
 import {
   SUBSCRIPTION_PRICE,
   trialDaysRemaining,
@@ -179,6 +195,23 @@ export default function Subscribe() {
               Auto-renews monthly until cancelled. Payment is charged to your Apple ID at
               purchase confirmation. Manage or cancel anytime in your Apple ID settings.
             </p>
+
+            {/* Exigido pela Apple (Guideline 3.1.2(c)): links funcionais pros Terms of
+                Use (EULA) e Privacy Policy visíveis no próprio fluxo de compra. */}
+            <p className="text-xs text-center mt-2">
+              <button
+                type="button"
+                onClick={() => openExternal(APPLE_STANDARD_EULA_URL)}
+                className="text-[#2BC4BB] underline underline-offset-2"
+              >
+                Terms of Use
+              </button>
+              <span className="text-[#8A97A8] dark:text-slate-400"> · </span>
+              <Link to="/privacy" className="text-[#2BC4BB] underline underline-offset-2">
+                Privacy Policy
+              </Link>
+            </p>
+
             {error && (
               <p className="text-sm text-red-500 text-center mt-2" role="alert">
                 {error}
